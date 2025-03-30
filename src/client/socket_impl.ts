@@ -1,12 +1,7 @@
-import {
-  ConnectEvent,
-  type ConnectionInfo,
-  ConnectResult,
-  DisconnectEvent,
-  NiimbotAbstractClient,
-  RawPacketSentEvent,
-  Utils,
-} from '@mmote/niimbluelib'
+import { ConnectionInfo, NiimbotAbstractClient } from './abstract_client'
+import { ConnectResult } from '../packets'
+import { ConnectEvent, DisconnectEvent, RawPacketSentEvent } from '../events'
+import { Utils } from '../utils'
 
 export interface DeviceInfo {
   id: string
