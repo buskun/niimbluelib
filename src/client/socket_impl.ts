@@ -32,12 +32,12 @@ export class NiimbotSocketClient extends NiimbotAbstractClient {
     return new Uint8Array(bytes)
   }
 
-  public async connect(selectDevice?: (deviceList: DeviceInfo[]) => Promise<string>): Promise<ConnectionInfo> {
+  public async connect(websocketUrl?: string, selectDevice?: (deviceList: DeviceInfo[]) => Promise<string>): Promise<ConnectionInfo> {
     await this.disconnect()
-    if (!selectDevice) return { result: ConnectResult.Disconnect }
+    if (!selectDevice || !websocketUrl) return { result: ConnectResult.Disconnect }
 
     const _webSocket: WebSocket = await new Promise((resolve, reject) => {
-      const server = new WebSocket('ws://localhost:8080')
+      const server = new WebSocket(websocketUrl)
 
       server.onopen = () => resolve(server)
       server.onerror = err => reject(err)
