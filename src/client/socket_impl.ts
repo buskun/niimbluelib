@@ -37,7 +37,13 @@ export class NiimbotSocketClient extends NiimbotAbstractClient {
     if (!selectDevice || !websocketUrl) return { result: ConnectResult.Disconnect }
 
     const _webSocket: WebSocket = await new Promise((resolve, reject) => {
-      const server = new WebSocket(websocketUrl)
+      let server: WebSocket
+      try {
+        server = new WebSocket(websocketUrl)
+      } catch (e) {
+        if (e instanceof Error) return reject(e.message)
+        return reject(e)
+      }
 
       server.onopen = () => resolve(server)
       server.onerror = err => reject(err)
